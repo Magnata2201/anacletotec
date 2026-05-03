@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anacleto Tec - Evolução & Segurança</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* VARIÁVEIS DE CORES */
+        :root {
+            --bg-dark: #07090f;
+            --bg-panel: rgba(15, 20, 35, 0.85);
+            --blue-neon: #00a8ff;
+            --orange-neon: #ff6b00;
+            --text-light: #e0e6ed;
+            --font-title: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 168, 255, 0.07), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 0, 0.07), transparent 40%);
+        }
+
+        /* HEADER & NAVEGAÇÃO */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 9, 15, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+        }
+
+        .logo-img {
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(0, 168, 255, 0.5));
+        }
+
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav a {
+            color: var(--text-light); text-decoration: none; font-size: 16px;
+            font-weight: 600; text-transform: uppercase; transition: 0.3s;
+        }
+        nav a:hover { color: var(--blue-neon); text-shadow: 0 0 8px var(--blue-neon); }
+
+        .menu-toggle { display: none; font-size: 24px; color: var(--blue-neon); cursor: pointer; }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(rgba(7,9,15,0.85), rgba(7,9,15,0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') center/cover;
+        }
+
+        .hero h1 { font-family: var(--font-title); font-size: clamp(2rem, 6vw, 4rem); line-height: 1.2; margin-bottom: 20px; }
+        .hero p { font-size: clamp(1.1rem, 3vw, 1.4rem); max-width: 700px; margin-bottom: 35px; color: #a0aec0; }
+
+        .hero-buttons {
+            display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+        }
+
+        /* BOTÕES ESTILIZADOS */
+        .btn {
+            padding: 15px 35px; font-size: 1.1rem; font-family: var(--font-title); color: #fff;
+            border: none; border-radius: 4px; cursor: pointer; text-decoration: none;
+            transition: 0.4s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        
+        .btn-primary { background: linear-gradient(45deg, var(--blue-neon), var(--orange-neon)); box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5); }
+        
+        .btn-whatsapp { background: #25d366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+        .btn-whatsapp:hover { background: #128c7e; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+
+        /* SEÇÕES GERAIS */
+        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-family: var(--font-title); font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 60px; text-transform: uppercase; }
+        .section-title span { color: var(--orange-neon); }
+
+        /* SOBRE NÓS */
+        .about-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; justify-content: space-between; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-text p { font-size: 1.2rem; margin-bottom: 20px; line-height: 1.7; color: #cbd5e0; }
+        
+        .about-image { flex: 1; min-width: 300px; text-align: center; position: relative; }
+        .about-image img { width: 100%; border-radius: 15px; border: 2px solid var(--blue-neon); box-shadow: 0 0 25px rgba(0, 168, 255, 0.2); }
+        
+        /* ESCUDO (SEGREDO PONG) AINDA AQUI, MAS MENOR */
+        .shield-secret { position: absolute; bottom: -20px; right: -20px; font-size: 3rem; color: var(--orange-neon); cursor: pointer; text-shadow: 0 0 15px rgba(255, 107, 0, 0.5); background: var(--bg-dark); border-radius: 50%; padding: 15px; border: 2px solid var(--orange-neon); transition: 0.3s; }
+        .shield-secret:hover { transform: scale(1.1) rotate(10deg); }
+
+        /* CARDS DE SERVIÇOS */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        .card { background: var(--bg-panel); padding: 40px 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; text-align: center; }
+        .card:hover { border-color: var(--blue-neon); background: rgba(15, 25, 45, 0.9); transform: translateY(-10px); }
+        .card i { font-size: 2.5rem; color: var(--orange-neon); margin-bottom: 20px; }
+        .card h3 { font-family: var(--font-title); margin-bottom: 15px; font-size: 1.3rem; }
+        .card p { color: #a0aec0; font-size: 1.05rem; }
+
+        /* FORMULÁRIO EMAIL (SILENCIOSO) */
+        .contact-container { max-width: 700px; margin: 0 auto; background: var(--bg-panel); padding: 40px; border-radius: 15px; border: 1px solid rgba(0, 168, 255, 0.1); }
+        .wa-form { display: flex; flex-direction: column; gap: 15px; }
+        .wa-form input, .wa-form select, .wa-form textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-family: var(--font-body); font-size: 1.1rem; outline: none; }
+        .wa-form input:focus, .wa-form select:focus, .wa-form textarea:focus { border-color: var(--blue-neon); }
+
+        /* WHATSAPP FLUTUANTE */
+        .whatsapp-float {
+            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
+            background-color: #25d366; color: #FFF; border-radius: 50%; text-align: center;
+            font-size: 30px; box-shadow: 0px 4px 15px rgba(37, 211, 102, 0.5); z-index: 1000;
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+        .whatsapp-float:hover { background-color: #128c7e; transform: scale(1.1); color: #fff; }
+
+        /* JOGOS / MODAIS */
+        .modal-game { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.98); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; }
+        canvas { border: 2px solid var(--blue-neon); background: #000; max-width: 90vw; max-height: 70vh; }
+        .close-btn { margin-top: 25px; padding: 10px 25px; border: 1px solid #ff4444; color: #ff4444; cursor: pointer; font-family: var(--font-title); }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .logo-img { height: 45px; }
+            .menu-toggle { display: block; }
+            nav { position: absolute; top: 100%; left: 0; width: 100%; background: #07090f; display: none; border-bottom: 1px solid var(--blue-neon); }
+            nav.active { display: block; }
+            nav ul { flex-direction: column; padding: 30px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.png" alt="Anacleto Tec Logo" class="logo-img" id="trigger-snake" title="Anacleto Tec">
+        
+        <div class="menu-toggle" id="btn-mobile"><i class="fas fa-bars"></i></div>
+
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>Sistemas <span style="color:var(--blue-neon)">Inteligentes</span> & <br>Segurança <span style="color:var(--orange-neon)">Total</span></h1>
+        <p>Especialistas em desenvolvimento de software, infraestrutura de redes e monitoramento avançado para o seu negócio.</p>
+        
+        <div class="hero-buttons">
+            <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
+            <a href="https://wa.me/5511913529132" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chamar no WhatsApp</a>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2 class="section-title">Sobre a <span>Nossa Empresa</span></h2>
+        <div class="about-flex">
+            <div class="about-text">
+                <p>Na Anacleto Tec, transformamos tecnologia em produtividade. Atuamos desde o desenvolvimento de sites exclusivos até a montagem de infraestruturas críticas de segurança e redes.</p>
+                <p>Nosso foco é a inovação constante e o suporte técnico de alta performance, garantindo que equipamentos, servidores e sistemas de CFTV funcionem com 100% de eficiência, para que sua única preocupação seja o crescimento da sua empresa.</p>
+            </div>
+            
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1000&auto=format&fit=crop" alt="Servidores e Redes Anacleto Tec">
+                
+                <i class="fas fa-shield-virus shield-secret" id="trigger-pong" title="Proteção 360º"></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos">
+        <h2 class="section-title">Nossas <span>Soluções</span></h2>
+        <div class="services-grid">
+            <div class="card">
+                <i class="fas fa-terminal"></i>
+                <h3>Programação & Sites</h3>
+                <p>Criação de sites institucionais, e-commerce e sistemas web personalizados para sua empresa.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-video"></i>
+                <h3>Segurança (CFTV)</h3>
+                <p>Instalação de câmeras de alta definição e sistemas de monitoramento via celular 24h.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-desktop"></i>
+                <h3>Montagem e Manutenção</h3>
+                <p>Reparo especializado em computadores, notebooks e montagem de setups de alta performance.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-network-wired"></i>
+                <h3>Redes & Infraestrutura</h3>
+                <p>Cabeamento estruturado, configuração de roteadores e servidores para empresas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato">
+        <h2 class="section-title">Fale com <span>Especialistas</span></h2>
+        <div class="contact-container">
+            <form class="wa-form" id="form-email">
+                <input type="text" id="fnome" placeholder="Seu Nome Completo" required>
+                <input type="tel" id="ftelefone" placeholder="Seu Telefone / WhatsApp" required>
+                
+                <select id="fservico">
+                    <option value="Geral">Assunto de interesse</option>
+                    <option value="Criação de Site/Sistema">Criação de Site ou Sistema</option>
+                    <option value="Câmeras de Segurança">Câmeras de Segurança (CFTV)</option>
+                    <option value="Manutenção de Computador">Montagem/Manutenção de Computador</option>
+                    <option value="Infraestrutura de Redes">Infraestrutura de Redes</option>
+                </select>
+                <textarea id="fmsg" rows="4" placeholder="Descreva brevemente o que você precisa..." required></textarea>
+                
+                <button type="submit" class="btn btn-primary" id="btn-enviar" style="width: 100%; justify-content: center;">
+                    Enviar Solicitação <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="text-align:center; padding: 40px; background: #030408; border-top: 1px solid #1a1e2e;">
+        <p style="color:#718096">&copy; 2026 Anacleto Tec. Todos os direitos reservados.</p>
+    </footer>
+
+    <a href="https://wa.me/5511913529132" class="whatsapp-float" target="_blank" title="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div id="modal-snake" class="modal-game">
+        <h2 style="color:var(--blue-neon); font-family:var(--font-title); margin-bottom:15px;">MODO ARCADE: SNAKE</h2>
+        <canvas id="canvas-snake" width="400" height="400"></canvas>
+        <div class="close-btn" onclick="fecharJogos()">SAIR DO TERMINAL</div>
+    </div>
+
+    <div id="modal-pong" class="modal-game">
+        <h2 style="color:var(--orange-neon); font-family:var(--font-title); margin-bottom:15px;">MODO ARCADE: NEON PONG</h2>
+        <canvas id="canvas-pong" width="600" height="400"></canvas>
+        <div class="close-btn" onclick="fecharJogos()">SAIR DO TERMINAL</div>
+    </div>
+
+    <script>
+        /* MENU MOBILE */
+        const btnMobile = document.getElementById('btn-mobile');
+        const navMenu = document.getElementById('nav-menu');
+        btnMobile.addEventListener('click', () => navMenu.classList.toggle('active'));
+
+        /* LÓGICA DO FORMULÁRIO (ENVIANDO TELEFONE) */
+        document.getElementById('form-email').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btn-enviar');
+            btn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
+            btn.style.opacity = '0.7';
+
+            // Pegando os novos valores
+            const nome = document.getElementById('fnome').value;
+            const telefone = document.getElementById('ftelefone').value;
+            const servico = document.getElementById('fservico').value;
+            const msg = document.getElementById('fmsg').value;
+
+            // --- SEU EMAIL OFICIAL PARA RECEBER OS DADOS ---
+            const seuEmail = "bruno22011996@gmail.com"; 
+
+            fetch(`https://formsubmit.co/ajax/${seuEmail}`, {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    Nome: nome,
+                    Telefone: telefone, // Mudamos de Email para Telefone aqui
+                    Servico: servico,
+                    Mensagem: msg
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Mensagem enviada com sucesso! Entraremos em contato pelo seu telefone em breve.");
+                document.getElementById('form-email').reset();
+                btn.innerHTML = 'Enviar Solicitação <i class="fas fa-paper-plane"></i>';
+                btn.style.opacity = '1';
+            })
+            .catch(error => {
+                alert("Ocorreu um erro. Tente novamente ou nos chame no WhatsApp!");
+                btn.innerHTML = 'Enviar Solicitação <i class="fas fa-paper-plane"></i>';
+                btn.style.opacity = '1';
+            });
+        });
+
+        /* EASTER EGGS (JOGOS CONTINUAM FUNCIONANDO NA LOGO E NO ESCUDO) */
+        let cSnake = 0; let cPong = 0;
+        document.getElementById('trigger-snake').onclick = () => { cSnake++; if(cSnake >= 5){ abrirSnake(); cSnake=0; } };
+        document.getElementById('trigger-pong').onclick = () => { cPong++; if(cPong >= 5){ abrirPong(); cPong=0; } };
+
+        function fecharJogos() {
+            document.getElementById('modal-snake').style.display = 'none';
+            document.getElementById('modal-pong').style.display = 'none';
+            clearInterval(gameLoop);
+        }
+
+        let gameLoop;
+        
+        // JOGO DA COBRINHA (SNAKE)
+        function abrirSnake() {
+            const modal = document.getElementById('modal-snake');
+            modal.style.display = 'flex';
+            const cvs = document.getElementById('canvas-snake');
+            const ctx = cvs.getContext('2d');
+            let box = 20; let snake = [{x: 10*box, y: 10*box}];
+            let dir = "RIGHT"; let food = {x: Math.floor(Math.random()*19+1)*box, y: Math.floor(Math.random()*19+1)*box};
+            
+            document.onkeydown = (e) => {
+                if(e.keyCode==37 && dir!="RIGHT") dir="LEFT";
+                if(e.keyCode==38 && dir!="DOWN") dir="UP";
+                if(e.keyCode==39 && dir!="LEFT") dir="RIGHT";
+                if(e.keyCode==40 && dir!="UP") dir="DOWN";
+            };
+
+            gameLoop = setInterval(() => {
+                ctx.fillStyle = "black"; ctx.fillRect(0,0,400,400);
+                for(let i=0; i<snake.length; i++){
+                    ctx.fillStyle = (i==0) ? "#00a8ff" : "#ff6b00";
+                    ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                }
+                ctx.fillStyle = "white"; ctx.fillRect(food.x, food.y, box, box);
+                let sX = snake[0].x; let sY = snake[0].y;
+                if(dir=="LEFT") sX-=box; if(dir=="UP") sY-=box; if(dir=="RIGHT") sX+=box; if(dir=="DOWN") sY+=box;
+                if(sX==food.x && sY==food.y){
+                    food = {x: Math.floor(Math.random()*19+1)*box, y: Math.floor(Math.random()*19+1)*box};
+                } else { snake.pop(); }
+                let head = {x: sX, y: sY};
+                if(sX<0||sX>=400||sY<0||sY>=400) { clearInterval(gameLoop); fecharJogos(); }
+                snake.unshift(head);
+            }, 100);
+        }
+
+        // JOGO PONG
+        function abrirPong() {
+            const modal = document.getElementById('modal-pong');
+            modal.style.display = 'flex';
+            const cvs = document.getElementById('canvas-pong');
+            const ctx = cvs.getContext('2d');
+            let p1y = 150; let py = 150; let bx = 300; let by = 200; let bdx = 4; let bdy = 4;
+
+            cvs.onmousemove = (e) => { p1y = e.clientY - cvs.getBoundingClientRect().top - 40; };
+            cvs.ontouchmove = (e) => {
+                p1y = e.touches[0].clientY - cvs.getBoundingClientRect().top - 40;
+                e.preventDefault();
+            };
+
+            gameLoop = setInterval(() => {
+                ctx.fillStyle = "black"; ctx.fillRect(0,0,600,400);
+                ctx.fillStyle = "#00a8ff"; ctx.fillRect(10, p1y, 10, 80);
+                ctx.fillStyle = "#ff6b00"; ctx.fillRect(580, py, 10, 80);
+                ctx.fillStyle = "white"; ctx.beginPath(); ctx.arc(bx, by, 8, 0, Math.PI*2); ctx.fill();
+                bx += bdx; by += bdy;
+                if(by<0 || by>400) bdy *= -1;
+                if(bx<0 || bx>600) { bx=300; by=200; bdx*=-1; }
+                if(bx<20 && by>p1y && by<p1y+80) bdx *= -1;
+                if(bx>570 && by>py && by<py+80) bdx *= -1;
+                py += (by - (py + 40)) * 0.1; 
+            }, 1000/60);
+        }
+    </script>
+</body>
+</html>
