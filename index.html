@@ -7,13 +7,13 @@
     
     <link rel="icon" type="image/png" href="logo.png">
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* VARIÁVEIS DE CORES */
         :root {
-            --bg-dark: #07090f;
+            --bg-dark: #03050a;
             --bg-panel: rgba(15, 20, 35, 0.85);
             --blue-neon: #00a8ff;
             --orange-neon: #ff6b00;
@@ -34,12 +34,9 @@
             color: var(--text-light);
             font-family: var(--font-body);
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 168, 255, 0.07), transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 107, 0, 0.07), transparent 40%);
         }
 
-        /* CURSOR PERSONALIZADO (TECH) */
+        /* CURSOR PERSONALIZADO */
         .cursor-dot {
             width: 10px;
             height: 10px;
@@ -79,10 +76,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(7, 9, 15, 0.95);
+            background: rgba(3, 5, 10, 0.95);
             backdrop-filter: blur(15px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 168, 255, 0.1);
         }
 
         .logo-img {
@@ -96,80 +93,182 @@
             filter: drop-shadow(0 0 10px rgba(0, 168, 255, 0.5));
         }
 
-        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul { list-style: none; display: flex; gap: 20px; }
         nav a {
-            color: var(--text-light); text-decoration: none; font-size: 16px;
+            color: var(--text-light); text-decoration: none; font-size: 15px;
             font-weight: 600; text-transform: uppercase; transition: 0.3s;
         }
         nav a:hover { color: var(--blue-neon); text-shadow: 0 0 8px var(--blue-neon); }
 
         .menu-toggle { display: none; font-size: 24px; color: var(--blue-neon); cursor: pointer; }
 
-        /* ESTILO DO CANVAS NEURAL */
+        /* =========================================
+           HERO SECTION: NOVO LAYOUT LADO A LADO
+        ========================================= */
+        .hero {
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            padding: 100px 20px 50px; 
+            position: relative; 
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+
+        /* CANVAS DA REDE NEURAL */
         #neural-canvas {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none; /* Para não atrapalhar os cliques nos botões */
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
         }
 
-        /* HERO SECTION COM FUNDO NEURAL */
-        .hero {
-            min-height: 100vh;
+        /* CONTAINER DIVIDIDO (Texto de um lado, Logo do outro) */
+        .hero-layout {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 100px 20px;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 10;
             position: relative;
-            overflow: hidden;
-            background: radial-gradient(circle at center, #0a0f1c 0%, var(--bg-dark) 100%);
+            gap: 40px;
         }
 
-        .hero > * { z-index: 2; position: relative; } /* Mantém textos acima da rede neural */
+        /* METADE ESQUERDA: TEXTO */
+        .hero-content {
+            flex: 1;
+            text-align: left;
+            max-width: 600px;
+        }
 
-        .hero h1 { font-family: var(--font-title); font-size: clamp(2rem, 6vw, 4rem); line-height: 1.2; margin-bottom: 20px; min-height: 100px;}
-        .hero p { font-size: clamp(1.1rem, 3vw, 1.4rem); max-width: 700px; margin-bottom: 35px; color: #a0aec0; }
+        .hero-overline {
+            display: block;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #e0e6ed;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
 
-        .hero-buttons {
-            display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+        .hero h1 { 
+            font-family: var(--font-title); 
+            font-size: clamp(2.2rem, 4vw, 3.8rem); 
+            font-weight: 900;
+            line-height: 1.1; 
+            margin-bottom: 20px; 
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .hero p { 
+            font-size: clamp(1rem, 2vw, 1.2rem); 
+            margin: 0 0 35px 0; 
+            color: #a0aec0; 
+            line-height: 1.6;
+            text-shadow: 0 0 8px rgba(0,0,0,0.8);
+        }
+
+        .hero-buttons { 
+            display: flex; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+            justify-content: flex-start; /* Alinha botões à esquerda */
         }
 
         /* BOTÕES ESTILIZADOS */
         .btn {
-            padding: 15px 35px; font-size: 1.1rem; font-family: var(--font-title); color: #fff;
-            border: none; border-radius: 4px; cursor: pointer; text-decoration: none;
+            padding: 15px 30px; font-size: 1rem; font-family: var(--font-title); color: #fff;
+            border: none; border-radius: 6px; cursor: pointer; text-decoration: none;
             transition: 0.4s; display: inline-flex; align-items: center; gap: 10px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
         }
         
-        .btn-primary { background: linear-gradient(45deg, var(--blue-neon), var(--orange-neon)); box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5); }
+        .btn-primary { background: linear-gradient(90deg, var(--blue-neon), var(--orange-neon)); box-shadow: 0 4px 20px rgba(0, 168, 255, 0.3), 0 10px 20px rgba(0,0,0,0.5); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(255, 107, 0, 0.5), 0 10px 20px rgba(0,0,0,0.5); background: linear-gradient(90deg, var(--orange-neon), var(--blue-neon));}
         
-        /* Botão WhatsApp com Pulse Neon */
-        .btn-whatsapp { 
-            background: #25d366; 
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); 
-            animation: pulse-green 2s infinite; 
-        }
-        .btn-whatsapp:hover { 
-            background: #128c7e; 
-            transform: translateY(-3px); 
-            animation: none;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); 
+        .btn-whatsapp { background: #25d366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3), 0 10px 20px rgba(0,0,0,0.5); }
+        .btn-whatsapp:hover { background: #128c7e; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5), 0 10px 20px rgba(0,0,0,0.5); }
+
+        /* METADE DIREITA: NÚCLEO CIBERNÉTICO E LOGO */
+        .cyber-core {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1 / 1; /* Mantém o formato quadrado para os anéis */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        /* ANÉIS GIRATÓRIOS */
+        .ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            border-radius: 50%;
+            box-sizing: border-box;
+            transform: translate(-50%, -50%);
+        }
+        
+        .ring-1 {
+            width: 100%; height: 100%;
+            border: 3px dashed var(--blue-neon);
+            animation: spin 30s linear infinite;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.2);
+            transform-origin: top left; /* Correção para alinhamento absoluto */
+        }
+        
+        .ring-2 {
+            width: 85%; height: 85%;
+            border: 4px dotted var(--orange-neon);
+            animation: spin-reverse 20s linear infinite;
+            box-shadow: inset 0 0 20px rgba(255, 107, 0, 0.2);
+            transform-origin: top left;
+        }
+
+        .ring-3 {
+            width: 115%; height: 115%;
+            border: 1px solid rgba(0, 168, 255, 0.3);
+            animation: spin 45s linear infinite;
+            transform-origin: top left;
+        }
+
+        @keyframes spin { 
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); } 
+        }
+        @keyframes spin-reverse { 
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); } 
+        }
+
+        /* O LOGO 100% VISÍVEL NO CENTRO DOS ANÉIS */
+        .hero-bg-logo-circle {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;  
+            height: 70%;
+            border-radius: 50%; 
+            background-image: url('logo.png');
+            background-size: cover; 
+            background-position: center;
+            background-color: #000; 
+            
+            /* Borda tech brilhante */
+            border: 4px solid var(--blue-neon);
+            box-shadow: 0 0 60px rgba(0, 168, 255, 0.8), inset 0 0 20px rgba(0,0,0,0.8);
+            
+            opacity: 1; /* 100% VISÍVEL */
+            overflow: hidden;
+            z-index: 5;
         }
 
         /* SEÇÕES GERAIS */
-        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        section:not(.hero) { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
         .section-title { font-family: var(--font-title); font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 60px; text-transform: uppercase; }
         .section-title span { color: var(--orange-neon); }
 
@@ -177,10 +276,8 @@
         .about-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; justify-content: space-between; }
         .about-text { flex: 1; min-width: 300px; }
         .about-text p { font-size: 1.2rem; margin-bottom: 20px; line-height: 1.7; color: #cbd5e0; }
-        
         .about-image { flex: 1; min-width: 300px; text-align: center; position: relative; }
         .about-image img { width: 100%; border-radius: 15px; border: 2px solid var(--blue-neon); box-shadow: 0 0 25px rgba(0, 168, 255, 0.2); }
-        
         .shield-secret { position: absolute; bottom: -20px; right: -20px; font-size: 3rem; color: var(--orange-neon); cursor: pointer; text-shadow: 0 0 15px rgba(255, 107, 0, 0.5); background: var(--bg-dark); border-radius: 50%; padding: 15px; border: 2px solid var(--orange-neon); transition: 0.3s; }
         .shield-secret:hover { transform: scale(1.1) rotate(10deg); }
 
@@ -193,20 +290,46 @@
         .card h3 { font-family: var(--font-title); margin-bottom: 15px; font-size: 1.3rem; }
         .card p { color: #a0aec0; font-size: 1.05rem; }
 
+        /* PORTFÓLIO DE TRABALHOS */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .portfolio-card { background: var(--bg-panel); border-radius: 12px; overflow: hidden; border: 1px solid rgba(0, 168, 255, 0.1); transition: 0.3s; cursor: pointer; }
+        .portfolio-card:hover { border-color: var(--blue-neon); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 168, 255, 0.2); }
+        .portfolio-img { width: 100%; height: 200px; overflow: hidden; position: relative; }
+        .portfolio-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .portfolio-card:hover .portfolio-img img { transform: scale(1.1); filter: brightness(1.2); }
+        .portfolio-info { padding: 25px 20px; text-align: left; }
+        .portfolio-info h3 { font-family: var(--font-title); color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .portfolio-info p { color: #a0aec0; font-size: 0.95rem; }
+
+        /* DEPOIMENTOS */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .testimonial-card { background: linear-gradient(145deg, rgba(15, 20, 35, 0.9), rgba(7, 9, 15, 0.9)); padding: 30px; border-radius: 12px; border-left: 4px solid var(--orange-neon); position: relative; transition: 0.3s; }
+        .testimonial-card:hover { transform: translateX(10px); box-shadow: -5px 5px 20px rgba(255, 107, 0, 0.15); }
+        .testimonial-card i { font-size: 2rem; color: rgba(255, 107, 0, 0.2); position: absolute; top: 20px; right: 20px; }
+        .testimonial-card p { font-style: italic; color: #e0e6ed; margin-bottom: 20px; line-height: 1.6; z-index: 1; position: relative; font-size: 0.95rem;}
+        .client-info { display: flex; flex-direction: column; }
+        .client-info h4 { font-family: var(--font-title); color: var(--blue-neon); letter-spacing: 1px; font-size: 1.1rem;}
+        .client-info span { color: #718096; font-size: 0.8rem; text-transform: uppercase; }
+
         /* FORMULÁRIO EMAIL */
         .contact-container { max-width: 700px; margin: 0 auto; background: var(--bg-panel); padding: 40px; border-radius: 15px; border: 1px solid rgba(0, 168, 255, 0.1); }
         .wa-form { display: flex; flex-direction: column; gap: 15px; }
         .wa-form input, .wa-form select, .wa-form textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-family: var(--font-body); font-size: 1.1rem; outline: none; transition: 0.3s;}
         .wa-form input:focus, .wa-form select:focus, .wa-form textarea:focus { border-color: var(--blue-neon); box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);}
 
+        /* FOOTER & LINKS INSTAGRAM */
+        footer { text-align: center; padding: 50px 20px; background: #010205; border-top: 1px solid #1a1e2e; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .social-links { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+        .social-links a { color: var(--text-light); text-decoration: none; font-size: 1.2rem; font-weight: 600; display: flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 50px; background: rgba(255,255,255,0.05); transition: 0.3s; border: 1px solid transparent; }
+        .social-links a:hover { transform: translateY(-3px); background: rgba(255,255,255,0.1); }
+        .link-bruno:hover { border-color: var(--blue-neon); box-shadow: 0 0 15px rgba(0, 168, 255, 0.2); }
+        .link-bruno i { color: var(--blue-neon); font-size: 1.4rem; }
+        .link-anacleto:hover { border-color: var(--orange-neon); box-shadow: 0 0 15px rgba(255, 107, 0, 0.2); }
+        .link-anacleto i { color: var(--orange-neon); font-size: 1.4rem; }
+
         /* WHATSAPP FLUTUANTE */
-        .whatsapp-float {
-            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
-            background-color: #25d366; color: #FFF; border-radius: 50%; text-align: center;
-            font-size: 30px; box-shadow: 0px 4px 15px rgba(37, 211, 102, 0.5); z-index: 1000;
-            display: flex; align-items: center; justify-content: center; transition: 0.3s;
-        }
-        .whatsapp-float:hover { background-color: #128c7e; transform: scale(1.1); color: #fff; }
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; text-align: center; font-size: 30px; box-shadow: 0px 4px 15px rgba(37, 211, 102, 0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: 0.3s; animation: pulse-green 2s infinite;}
+        .whatsapp-float:hover { background-color: #128c7e; transform: scale(1.1); color: #fff; animation: none;}
 
         /* JOGOS / MODAIS */
         .modal-game { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.98); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; }
@@ -214,16 +337,35 @@
         .close-btn { margin-top: 25px; padding: 10px 25px; border: 1px solid #ff4444; color: #ff4444; cursor: pointer; font-family: var(--font-title); transition: 0.3s;}
         .close-btn:hover { background: #ff4444; color: #000; }
 
-        /* RESPONSIVIDADE */
+        /* RESPONSIVIDADE (CELULARES E TABLETS) */
+        @media (max-width: 992px) {
+            .hero-layout {
+                flex-direction: column; /* Coloca o texto em cima e o logo em baixo */
+                text-align: center;
+                gap: 50px;
+                margin-top: 30px;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .hero-buttons {
+                justify-content: center; /* Centraliza botões no celular */
+            }
+            .cyber-core {
+                max-width: 400px;
+            }
+        }
+
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             .logo-img { height: 45px; }
             .menu-toggle { display: block; }
-            nav { position: absolute; top: 100%; left: 0; width: 100%; background: #07090f; display: none; border-bottom: 1px solid var(--blue-neon); }
+            nav { position: absolute; top: 100%; left: 0; width: 100%; background: #03050a; display: none; border-bottom: 1px solid var(--blue-neon); }
             nav.active { display: block; }
             nav ul { flex-direction: column; padding: 30px; text-align: center; }
-            .cursor-dot { display: none; } /* Oculta o cursor em celulares */
-            .hero h1 { min-height: 120px; }
+            .cursor-dot { display: none; }
+            .social-links { flex-direction: column; gap: 15px; }
+            .cyber-core { width: 85vw; height: 85vw; }
         }
     </style>
 </head>
@@ -241,6 +383,8 @@
                 <li><a href="#home">Início</a></li>
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#depoimentos">Avaliações</a></li>
                 <li><a href="#contato">Contato</a></li>
             </ul>
         </nav>
@@ -249,12 +393,30 @@
     <section class="hero" id="home">
         <canvas id="neural-canvas"></canvas>
 
-        <h1>Sistemas <span id="typing-text" style="color:var(--blue-neon)"></span> <br> & Segurança <span style="color:var(--orange-neon)">Total</span></h1>
-        <p>Especialistas em desenvolvimento de software, infraestrutura de redes e monitoramento avançado para o seu negócio.</p>
-        
-        <div class="hero-buttons">
-            <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
-            <a href="https://wa.me/5511913529132" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chamar no WhatsApp</a>
+        <div class="hero-layout">
+            
+            <div class="hero-content">
+                <span class="hero-overline">O Futuro da Sua Empresa Começa na Interconexão</span>
+                <h1>
+                    <span style="color:var(--blue-neon)">Software</span> que Escala,<br>
+                    <span style="color:var(--orange-neon)">Segurança</span> que Blinda
+                </h1>
+                <p>Especialistas em desenvolvimento web,sites, sistemas de gestão e etc infraestrutura de redes e monitoramento avançado para o seu negócio.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
+                    <a href="https://wa.me/5511913529132" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chamar no WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="cyber-core">
+                <div class="ring ring-1"></div>
+                <div class="ring ring-2"></div>
+                <div class="ring ring-3"></div>
+                
+                <div class="hero-bg-logo-circle"></div>
+            </div>
+
         </div>
     </section>
 
@@ -300,6 +462,100 @@
         </div>
     </section>
 
+    <section id="portfolio" class="reveal">
+        <h2 class="section-title">Trabalhos <span>Realizados</span></h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-card reveal">
+                <div class="portfolio-img">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1000&auto=format&fit=crop" alt="Desenvolvimento Web">
+                </div>
+                <div class="portfolio-info">
+                    <h3>Sistema Web Empresarial</h3>
+                    <p>Desenvolvimento de painel administrativo para gestão de vendas e controle de estoque em nuvem.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-card reveal">
+                <div class="portfolio-img">
+                    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=1000&auto=format&fit=crop" alt="CFTV Segurança">
+                </div>
+                <div class="portfolio-info">
+                    <h3>Implantação de CFTV HD</h3>
+                    <p>Instalação de 16 câmeras com tecnologia IP e configuração de monitoramento 24h via smartphone.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-card reveal">
+                <div class="portfolio-img">
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1000&auto=format&fit=crop" alt="Cabeamento de Redes">
+                </div>
+                <div class="portfolio-info">
+                    <h3>Infraestrutura de Redes</h3>
+                    <p>Cabeamento estruturado categoria 6 e montagem de Rack servidor para agência de contabilidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos" class="reveal">
+        <h2 class="section-title">O Que <span>Dizem</span> Nossos Clientes</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right"></i>
+                <p>"A equipe da Anacleto Tec resolveu nosso problema de rede que travava há meses. O suporte é rápido e o preço é justo. Recomendo de olhos fechados!"</p>
+                <div class="client-info">
+                    <h4>Carlos Almeida</h4>
+                    <span>Diretor Comercial - Alpha Logística</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right"></i>
+                <p>"Contratamos para criar o novo site do nosso escritório e superaram as expectativas. Visual moderno, super rápido e já integrado ao nosso WhatsApp."</p>
+                <div class="client-info">
+                    <h4>Juliana Freitas</h4>
+                    <span>Advogada - Freitas & Associados</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right"></i>
+                <p>"A instalação do circuito de câmeras ficou impecável. Tudo sem fio aparente, muito limpo. Agora consigo monitorar minha loja direto de casa."</p>
+                <div class="client-info">
+                    <h4>Ricardo Santos</h4>
+                    <span>Proprietário - Mercado Center</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right"></i>
+                <p>"Precisávamos montar servidores potentes para a equipe de design. A consultoria deles foi perfeita e as máquinas rodam tudo sem engasgar."</p>
+                <div class="client-info">
+                    <h4>Mariana Costa</h4>
+                    <span>Diretora de Arte - Studio M</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right"></i>
+                <p>"O sistema de gestão que desenvolveram otimizou o controle do nosso estoque em 100%. A interface é linda e extremamente fácil de aprender."</p>
+                <div class="client-info">
+                    <h4>Felipe Andrade</h4>
+                    <span>Gerente de Operações - Distribuidora Vale</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right"></i>
+                <p>"Profissionalismo do começo ao fim! Fizeram toda a manutenção preventiva dos nossos computadores e a troca do cabeamento de internet em tempo recorde."</p>
+                <div class="client-info">
+                    <h4>Roberto Mendes</h4>
+                    <span>Dono da Mendes & Cia Contabilidade</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contato" class="reveal">
         <h2 class="section-title">Fale com <span>Especialistas</span></h2>
         <div class="contact-container">
@@ -323,8 +579,16 @@
         </div>
     </section>
 
-    <footer style="text-align:center; padding: 40px; background: #030408; border-top: 1px solid #1a1e2e;">
-        <p style="color:#718096">&copy; 2026 Anacleto Tec. Todos os direitos reservados.</p>
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/bruno_nago22" target="_blank" class="link-bruno">
+                <i class="fab fa-instagram"></i> @bruno_nago22
+            </a>
+            <a href="https://instagram.com/anacleto.tec" target="_blank" class="link-anacleto">
+                <i class="fab fa-instagram"></i> @anacleto.tec
+            </a>
+        </div>
+        <p style="color:#718096; font-size: 0.95rem; margin-top: 10px;">&copy; 2026 Anacleto Tec. Todos os direitos reservados.</p>
     </footer>
 
     <a href="https://wa.me/5511913529132" class="whatsapp-float" target="_blank" title="Fale conosco no WhatsApp">
@@ -351,33 +615,10 @@
             cursor.style.top = e.clientY + 'px';
         });
         
-        document.querySelectorAll('a, button, input, select, textarea, .logo-img, .shield-secret, .close-btn, .card').forEach(el => {
+        document.querySelectorAll('a, button, input, select, textarea, .logo-img, .shield-secret, .close-btn, .card, .portfolio-card, .testimonial-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
-
-        /* EFEITO DE DIGITAÇÃO NO HERO */
-        const textElement = document.getElementById('typing-text');
-        const phrases = ["Inteligentes", "Seguros", "Inovadores", "Escaláveis"];
-        let i = 0, j = 0;
-        function type() {
-            if (j < phrases[i].length) {
-                textElement.innerHTML += phrases[i].charAt(j++);
-                setTimeout(type, 120);
-            } else {
-                setTimeout(erase, 2000);
-            }
-        }
-        function erase() {
-            if (j > 0) {
-                textElement.innerHTML = phrases[i].substring(0, --j);
-                setTimeout(erase, 80);
-            } else {
-                i = (i + 1) % phrases.length;
-                setTimeout(type, 500);
-            }
-        }
-        if(textElement) type();
 
         /* ANIMAÇÃO DE REVELAÇÃO (SCROLL) */
         const observer = new IntersectionObserver((entries) => {
@@ -526,28 +767,24 @@
         canvasNeural.height = window.innerHeight;
 
         let particlesArray = [];
-        
-        // Ajusta a quantidade de pontos dependendo do tamanho da tela
-        const numberOfParticles = (window.innerWidth * window.innerHeight) / 12000;
+        const numberOfParticles = (window.innerWidth * window.innerHeight) / 10000;
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvasNeural.width;
                 this.y = Math.random() * canvasNeural.height;
-                this.size = Math.random() * 2 + 1; // Tamanho do ponto
-                this.speedX = (Math.random() - 0.5) * 1.5; // Velocidade
-                this.speedY = (Math.random() - 0.5) * 1.5;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 1.2;
+                this.speedY = (Math.random() - 0.5) * 1.2;
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                
-                // Faz os pontos "quicarem" nas bordas
                 if (this.x < 0 || this.x > canvasNeural.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvasNeural.height) this.speedY *= -1;
             }
             draw() {
-                ctxNeural.fillStyle = '#00a8ff'; // Cor Azul Neon
+                ctxNeural.fillStyle = '#00a8ff';
                 ctxNeural.beginPath();
                 ctxNeural.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctxNeural.fill();
@@ -566,16 +803,13 @@
             for (let i = 0; i < particlesArray.length; i++) {
                 particlesArray[i].update();
                 particlesArray[i].draw();
-                
-                // Conecta os pontos próximos
                 for (let j = i; j < particlesArray.length; j++) {
                     const dx = particlesArray[i].x - particlesArray[j].x;
                     const dy = particlesArray[i].y - particlesArray[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 120) { // Distância máxima para conectar
+                    if (distance < 130) {
                         ctxNeural.beginPath();
-                        ctxNeural.strokeStyle = `rgba(0, 168, 255, ${1 - distance / 120})`; // Fica transparente ao se afastar
+                        ctxNeural.strokeStyle = `rgba(0, 168, 255, ${1 - distance / 130})`;
                         ctxNeural.lineWidth = 1;
                         ctxNeural.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctxNeural.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -586,7 +820,6 @@
             requestAnimationFrame(animateNeural);
         }
 
-        // Recalcula o tamanho se a janela for redimensionada
         window.addEventListener('resize', function() {
             canvasNeural.width = window.innerWidth;
             canvasNeural.height = window.innerHeight;
