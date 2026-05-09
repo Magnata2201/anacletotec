@@ -39,6 +39,38 @@
                 radial-gradient(circle at 90% 80%, rgba(255, 107, 0, 0.07), transparent 40%);
         }
 
+        /* CURSOR PERSONALIZADO (TECH) */
+        .cursor-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--blue-neon);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s, border 0.2s;
+            box-shadow: 0 0 10px var(--blue-neon);
+        }
+        .cursor-dot.hovered {
+            width: 25px;
+            height: 25px;
+            background: transparent;
+            border: 2px solid var(--orange-neon);
+            box-shadow: 0 0 10px var(--orange-neon);
+        }
+
+        /* ANIMAÇÃO DE REVELAÇÃO (SCROLL) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* HEADER & NAVEGAÇÃO */
         header {
             position: fixed;
@@ -73,7 +105,18 @@
 
         .menu-toggle { display: none; font-size: 24px; color: var(--blue-neon); cursor: pointer; }
 
-        /* HERO SECTION */
+        /* ESTILO DO CANVAS NEURAL */
+        #neural-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none; /* Para não atrapalhar os cliques nos botões */
+        }
+
+        /* HERO SECTION COM FUNDO NEURAL */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -82,10 +125,14 @@
             align-items: center;
             text-align: center;
             padding: 100px 20px;
-            background: linear-gradient(rgba(7,9,15,0.85), rgba(7,9,15,0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') center/cover;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a0f1c 0%, var(--bg-dark) 100%);
         }
 
-        .hero h1 { font-family: var(--font-title); font-size: clamp(2rem, 6vw, 4rem); line-height: 1.2; margin-bottom: 20px; }
+        .hero > * { z-index: 2; position: relative; } /* Mantém textos acima da rede neural */
+
+        .hero h1 { font-family: var(--font-title); font-size: clamp(2rem, 6vw, 4rem); line-height: 1.2; margin-bottom: 20px; min-height: 100px;}
         .hero p { font-size: clamp(1.1rem, 3vw, 1.4rem); max-width: 700px; margin-bottom: 35px; color: #a0aec0; }
 
         .hero-buttons {
@@ -102,8 +149,24 @@
         .btn-primary { background: linear-gradient(45deg, var(--blue-neon), var(--orange-neon)); box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3); }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5); }
         
-        .btn-whatsapp { background: #25d366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-        .btn-whatsapp:hover { background: #128c7e; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+        /* Botão WhatsApp com Pulse Neon */
+        .btn-whatsapp { 
+            background: #25d366; 
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); 
+            animation: pulse-green 2s infinite; 
+        }
+        .btn-whatsapp:hover { 
+            background: #128c7e; 
+            transform: translateY(-3px); 
+            animation: none;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); 
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
 
         /* SEÇÕES GERAIS */
         section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
@@ -118,7 +181,6 @@
         .about-image { flex: 1; min-width: 300px; text-align: center; position: relative; }
         .about-image img { width: 100%; border-radius: 15px; border: 2px solid var(--blue-neon); box-shadow: 0 0 25px rgba(0, 168, 255, 0.2); }
         
-        /* ESCUDO (SEGREDO PONG) AINDA AQUI, MAS MENOR */
         .shield-secret { position: absolute; bottom: -20px; right: -20px; font-size: 3rem; color: var(--orange-neon); cursor: pointer; text-shadow: 0 0 15px rgba(255, 107, 0, 0.5); background: var(--bg-dark); border-radius: 50%; padding: 15px; border: 2px solid var(--orange-neon); transition: 0.3s; }
         .shield-secret:hover { transform: scale(1.1) rotate(10deg); }
 
@@ -126,15 +188,16 @@
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
         .card { background: var(--bg-panel); padding: 40px 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; text-align: center; }
         .card:hover { border-color: var(--blue-neon); background: rgba(15, 25, 45, 0.9); transform: translateY(-10px); }
-        .card i { font-size: 2.5rem; color: var(--orange-neon); margin-bottom: 20px; }
+        .card i { font-size: 2.5rem; color: var(--orange-neon); margin-bottom: 20px; transition: transform 0.4s; }
+        .card:hover i { transform: scale(1.2); }
         .card h3 { font-family: var(--font-title); margin-bottom: 15px; font-size: 1.3rem; }
         .card p { color: #a0aec0; font-size: 1.05rem; }
 
-        /* FORMULÁRIO EMAIL (SILENCIOSO) */
+        /* FORMULÁRIO EMAIL */
         .contact-container { max-width: 700px; margin: 0 auto; background: var(--bg-panel); padding: 40px; border-radius: 15px; border: 1px solid rgba(0, 168, 255, 0.1); }
         .wa-form { display: flex; flex-direction: column; gap: 15px; }
-        .wa-form input, .wa-form select, .wa-form textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-family: var(--font-body); font-size: 1.1rem; outline: none; }
-        .wa-form input:focus, .wa-form select:focus, .wa-form textarea:focus { border-color: var(--blue-neon); }
+        .wa-form input, .wa-form select, .wa-form textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-family: var(--font-body); font-size: 1.1rem; outline: none; transition: 0.3s;}
+        .wa-form input:focus, .wa-form select:focus, .wa-form textarea:focus { border-color: var(--blue-neon); box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);}
 
         /* WHATSAPP FLUTUANTE */
         .whatsapp-float {
@@ -147,8 +210,9 @@
 
         /* JOGOS / MODAIS */
         .modal-game { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.98); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; }
-        canvas { border: 2px solid var(--blue-neon); background: #000; max-width: 90vw; max-height: 70vh; }
-        .close-btn { margin-top: 25px; padding: 10px 25px; border: 1px solid #ff4444; color: #ff4444; cursor: pointer; font-family: var(--font-title); }
+        canvas.game-canvas { border: 2px solid var(--blue-neon); background: #000; max-width: 90vw; max-height: 70vh; pointer-events: auto;}
+        .close-btn { margin-top: 25px; padding: 10px 25px; border: 1px solid #ff4444; color: #ff4444; cursor: pointer; font-family: var(--font-title); transition: 0.3s;}
+        .close-btn:hover { background: #ff4444; color: #000; }
 
         /* RESPONSIVIDADE */
         @media (max-width: 768px) {
@@ -158,10 +222,14 @@
             nav { position: absolute; top: 100%; left: 0; width: 100%; background: #07090f; display: none; border-bottom: 1px solid var(--blue-neon); }
             nav.active { display: block; }
             nav ul { flex-direction: column; padding: 30px; text-align: center; }
+            .cursor-dot { display: none; } /* Oculta o cursor em celulares */
+            .hero h1 { min-height: 120px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="cursor-dot" id="cursor"></div>
 
     <header>
         <img src="logo.png" alt="Anacleto Tec Logo" class="logo-img" id="trigger-snake" title="Anacleto Tec">
@@ -179,7 +247,9 @@
     </header>
 
     <section class="hero" id="home">
-        <h1>Sistemas <span style="color:var(--blue-neon)">Inteligentes</span> & <br>Segurança <span style="color:var(--orange-neon)">Total</span></h1>
+        <canvas id="neural-canvas"></canvas>
+
+        <h1>Sistemas <span id="typing-text" style="color:var(--blue-neon)"></span> <br> & Segurança <span style="color:var(--orange-neon)">Total</span></h1>
         <p>Especialistas em desenvolvimento de software, infraestrutura de redes e monitoramento avançado para o seu negócio.</p>
         
         <div class="hero-buttons">
@@ -188,7 +258,7 @@
         </div>
     </section>
 
-    <section id="sobre">
+    <section id="sobre" class="reveal">
         <h2 class="section-title">Sobre a <span>Nossa Empresa</span></h2>
         <div class="about-flex">
             <div class="about-text">
@@ -204,25 +274,25 @@
         </div>
     </section>
 
-    <section id="servicos">
+    <section id="servicos" class="reveal">
         <h2 class="section-title">Nossas <span>Soluções</span></h2>
         <div class="services-grid">
-            <div class="card">
+            <div class="card reveal">
                 <i class="fas fa-terminal"></i>
                 <h3>Programação & Sites</h3>
                 <p>Criação de sites institucionais, e-commerce e sistemas web personalizados para sua empresa.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <i class="fas fa-video"></i>
                 <h3>Segurança (CFTV)</h3>
                 <p>Instalação de câmeras de alta definição e sistemas de monitoramento via celular 24h.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <i class="fas fa-desktop"></i>
                 <h3>Montagem e Manutenção</h3>
                 <p>Reparo especializado em computadores, notebooks e montagem de setups de alta performance.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <i class="fas fa-network-wired"></i>
                 <h3>Redes & Infraestrutura</h3>
                 <p>Cabeamento estruturado, configuração de roteadores e servidores para empresas.</p>
@@ -230,7 +300,7 @@
         </div>
     </section>
 
-    <section id="contato">
+    <section id="contato" class="reveal">
         <h2 class="section-title">Fale com <span>Especialistas</span></h2>
         <div class="contact-container">
             <form class="wa-form" id="form-email">
@@ -263,23 +333,75 @@
 
     <div id="modal-snake" class="modal-game">
         <h2 style="color:var(--blue-neon); font-family:var(--font-title); margin-bottom:15px;">MODO ARCADE: SNAKE</h2>
-        <canvas id="canvas-snake" width="400" height="400"></canvas>
+        <canvas id="canvas-snake" class="game-canvas" width="400" height="400"></canvas>
         <div class="close-btn" onclick="fecharJogos()">SAIR DO TERMINAL</div>
     </div>
 
     <div id="modal-pong" class="modal-game">
         <h2 style="color:var(--orange-neon); font-family:var(--font-title); margin-bottom:15px;">MODO ARCADE: NEON PONG</h2>
-        <canvas id="canvas-pong" width="600" height="400"></canvas>
+        <canvas id="canvas-pong" class="game-canvas" width="600" height="400"></canvas>
         <div class="close-btn" onclick="fecharJogos()">SAIR DO TERMINAL</div>
     </div>
 
     <script>
+        /* CURSOR PERSONALIZADO & EFEITO HOVER */
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        document.querySelectorAll('a, button, input, select, textarea, .logo-img, .shield-secret, .close-btn, .card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        /* EFEITO DE DIGITAÇÃO NO HERO */
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["Inteligentes", "Seguros", "Inovadores", "Escaláveis"];
+        let i = 0, j = 0;
+        function type() {
+            if (j < phrases[i].length) {
+                textElement.innerHTML += phrases[i].charAt(j++);
+                setTimeout(type, 120);
+            } else {
+                setTimeout(erase, 2000);
+            }
+        }
+        function erase() {
+            if (j > 0) {
+                textElement.innerHTML = phrases[i].substring(0, --j);
+                setTimeout(erase, 80);
+            } else {
+                i = (i + 1) % phrases.length;
+                setTimeout(type, 500);
+            }
+        }
+        if(textElement) type();
+
+        /* ANIMAÇÃO DE REVELAÇÃO (SCROLL) */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
         /* MENU MOBILE */
         const btnMobile = document.getElementById('btn-mobile');
         const navMenu = document.getElementById('nav-menu');
         btnMobile.addEventListener('click', () => navMenu.classList.toggle('active'));
+        
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
 
-        /* LÓGICA DO FORMULÁRIO (ENVIANDO TELEFONE) */
+        /* LÓGICA DO FORMULÁRIO */
         document.getElementById('form-email').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -287,13 +409,11 @@
             btn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
             btn.style.opacity = '0.7';
 
-            // Pegando os novos valores
             const nome = document.getElementById('fnome').value;
             const telefone = document.getElementById('ftelefone').value;
             const servico = document.getElementById('fservico').value;
             const msg = document.getElementById('fmsg').value;
 
-            // --- SEU EMAIL OFICIAL PARA RECEBER OS DADOS ---
             const seuEmail = "bruno22011996@gmail.com"; 
 
             fetch(`https://formsubmit.co/ajax/${seuEmail}`, {
@@ -304,7 +424,7 @@
                 },
                 body: JSON.stringify({
                     Nome: nome,
-                    Telefone: telefone, // Mudamos de Email para Telefone aqui
+                    Telefone: telefone, 
                     Servico: servico,
                     Mensagem: msg
                 })
@@ -323,7 +443,7 @@
             });
         });
 
-        /* EASTER EGGS (JOGOS CONTINUAM FUNCIONANDO NA LOGO E NO ESCUDO) */
+        /* EASTER EGGS (JOGOS) */
         let cSnake = 0; let cPong = 0;
         document.getElementById('trigger-snake').onclick = () => { cSnake++; if(cSnake >= 5){ abrirSnake(); cSnake=0; } };
         document.getElementById('trigger-pong').onclick = () => { cPong++; if(cPong >= 5){ abrirPong(); cPong=0; } };
@@ -397,6 +517,84 @@
                 py += (by - (py + 40)) * 0.1; 
             }, 1000/60);
         }
+
+        /* EFEITO FUNDO REDE NEURAL INFINITA */
+        const canvasNeural = document.getElementById('neural-canvas');
+        const ctxNeural = canvasNeural.getContext('2d');
+        
+        canvasNeural.width = window.innerWidth;
+        canvasNeural.height = window.innerHeight;
+
+        let particlesArray = [];
+        
+        // Ajusta a quantidade de pontos dependendo do tamanho da tela
+        const numberOfParticles = (window.innerWidth * window.innerHeight) / 12000;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvasNeural.width;
+                this.y = Math.random() * canvasNeural.height;
+                this.size = Math.random() * 2 + 1; // Tamanho do ponto
+                this.speedX = (Math.random() - 0.5) * 1.5; // Velocidade
+                this.speedY = (Math.random() - 0.5) * 1.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                // Faz os pontos "quicarem" nas bordas
+                if (this.x < 0 || this.x > canvasNeural.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvasNeural.height) this.speedY *= -1;
+            }
+            draw() {
+                ctxNeural.fillStyle = '#00a8ff'; // Cor Azul Neon
+                ctxNeural.beginPath();
+                ctxNeural.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctxNeural.fill();
+            }
+        }
+
+        function initNeural() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateNeural() {
+            ctxNeural.clearRect(0, 0, canvasNeural.width, canvasNeural.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Conecta os pontos próximos
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) { // Distância máxima para conectar
+                        ctxNeural.beginPath();
+                        ctxNeural.strokeStyle = `rgba(0, 168, 255, ${1 - distance / 120})`; // Fica transparente ao se afastar
+                        ctxNeural.lineWidth = 1;
+                        ctxNeural.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctxNeural.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctxNeural.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateNeural);
+        }
+
+        // Recalcula o tamanho se a janela for redimensionada
+        window.addEventListener('resize', function() {
+            canvasNeural.width = window.innerWidth;
+            canvasNeural.height = window.innerHeight;
+            initNeural();
+        });
+
+        initNeural();
+        animateNeural();
     </script>
 </body>
 </html>
