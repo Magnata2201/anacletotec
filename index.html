@@ -226,9 +226,28 @@
         .close-btn { margin-top: 25px; padding: 10px 25px; border: 1px solid #ff4444; color: #ff4444; cursor: pointer; font-family: var(--font-title); transition: 0.3s;}
         .close-btn:hover { background: #ff4444; color: #000; }
 
-        /* RESPONSIVIDADE */
-        @media (max-width: 992px) { .hero-layout { flex-direction: column; text-align: center; gap: 50px; margin-top: 30px; } .hero-content { text-align: center; } .hero-buttons { justify-content: center; } .cyber-core { max-width: 400px; } }
-        @media (max-width: 768px) { header { padding: 15px 20px; } .logo-img { height: 45px; } .menu-toggle { display: block; } nav { position: absolute; top: 100%; left: 0; width: 100%; background: #03050a; display: none; border-bottom: 1px solid var(--blue-neon); } nav.active { display: block; } nav ul { flex-direction: column; padding: 30px; text-align: center; } .cursor-dot { display: none; } .social-links { flex-direction: column; gap: 15px; } .cyber-core { width: 85vw; height: 85vw; } .visitor-counter { bottom: 20px; left: 20px; padding: 8px 12px; font-size: 0.75rem; } .visitor-counter i, .visitor-counter span { font-size: 0.9rem; } .card:hover { transform: none; } .card { transform: none !important; } }
+        /* WIDGET ASSISTENTE VIRTUAL ANACLETO TEC */
+        .chatbot-btn { position: fixed; bottom: 110px; right: 30px; width: 60px; height: 60px; background: var(--bg-panel); border: 2px solid var(--blue-neon); border-radius: 50%; color: var(--blue-neon); font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 15px rgba(0, 168, 255, 0.4); transition: 0.3s; }
+        .chatbot-btn:hover { transform: scale(1.1); background: var(--blue-neon); color: #fff; }
+        .chatbot-window { position: fixed; bottom: 180px; right: 30px; width: 320px; height: 400px; background: var(--bg-panel); border: 1px solid var(--blue-neon); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 1000; overflow: hidden; backdrop-filter: blur(10px); }
+        .chatbot-header { background: rgba(0, 168, 255, 0.15); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--blue-neon); }
+        .chatbot-header h3 { font-family: var(--font-title); font-size: 1.1rem; color: #fff; margin: 0; }
+        .close-chat { color: var(--orange-neon); cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .close-chat:hover { color: #ff4444; }
+        .chatbot-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scrollbar-width: thin; scrollbar-color: var(--blue-neon) transparent; }
+        .chat-msg { max-width: 85%; padding: 10px 15px; border-radius: 8px; font-size: 0.95rem; line-height: 1.4; }
+        .msg-bot { background: rgba(0, 168, 255, 0.1); color: var(--text-light); border-left: 3px solid var(--blue-neon); align-self: flex-start; }
+        .msg-user { background: rgba(255, 107, 0, 0.1); color: #fff; border-right: 3px solid var(--orange-neon); align-self: flex-end; }
+        .chatbot-input { display: flex; border-top: 1px solid rgba(255,255,255,0.1); padding: 10px; background: rgba(0,0,0,0.5); }
+        .chatbot-input input { flex: 1; background: transparent; border: none; color: #fff; font-family: var(--font-body); padding: 8px; outline: none; font-size: 1rem; }
+        .chatbot-input button { background: transparent; border: none; color: var(--blue-neon); font-size: 1.2rem; cursor: pointer; padding: 0 10px; transition: 0.3s; }
+        .chatbot-input button:hover { color: var(--orange-neon); }
+        
+        @media (max-width: 768px) {
+            .hero-layout { flex-direction: column; text-align: center; gap: 50px; margin-top: 30px; } .hero-content { text-align: center; } .hero-buttons { justify-content: center; } .cyber-core { max-width: 400px; }
+            header { padding: 15px 20px; } .logo-img { height: 45px; } .menu-toggle { display: block; } nav { position: absolute; top: 100%; left: 0; width: 100%; background: #03050a; display: none; border-bottom: 1px solid var(--blue-neon); } nav.active { display: block; } nav ul { flex-direction: column; padding: 30px; text-align: center; } .cursor-dot { display: none; } .social-links { flex-direction: column; gap: 15px; } .cyber-core { width: 85vw; height: 85vw; } .visitor-counter { bottom: 20px; left: 20px; padding: 8px 12px; font-size: 0.75rem; } .visitor-counter i, .visitor-counter span { font-size: 0.9rem; } .card:hover { transform: none; } .card { transform: none !important; }
+            .chatbot-window { bottom: 0; right: 0; width: 100%; height: 60vh; border-radius: 20px 20px 0 0; border: none; border-top: 2px solid var(--blue-neon); } .chatbot-btn { bottom: 90px; right: 20px; width: 50px; height: 50px; font-size: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -241,7 +260,6 @@
         <nav id="nav-menu">
             <ul>
                 <li><a href="#home">Início</a></li>
-                 
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#servicos">Serviços</a></li>
                 <li><a href="#portfolio">Portfólio</a></li>
@@ -257,9 +275,7 @@
             <div class="hero-content">
                 <span class="hero-overline">O Futuro da Sua Empresa Começa na Interconexão</span>
                 <h1><span style="color:var(--blue-neon)">Soluções</span> Tecnológicas para,<br><span style="color:var(--orange-neon)">Empresas e</span> Residências</h1>
-                <p>Desenvolvemos sistemas web profissionais, instalamos câmeras de segurança,
-realizamos manutenção de computadores, configuramos redes de computadores
-e oferecemos soluções tecnológicas completas para empresas e residências.</p>
+                <p>Desenvolvemos sistemas web profissionais, instalamos câmeras de segurança, realizamos manutenção de computadores, configuramos redes de computadores e oferecemos soluções tecnológicas completas para empresas e residências.</p>
                 <div class="hero-buttons">
                     <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
                     <a href="https://wa.me/5511913529132" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chamar no WhatsApp</a>
@@ -456,11 +472,28 @@ e oferecemos soluções tecnológicas completas para empresas e residências.</p
     <div id="modal-snake" class="modal-game"><h2 style="color:var(--blue-neon); font-family:var(--font-title); margin-bottom:15px;">MODO ARCADE: SNAKE</h2><canvas id="canvas-snake" class="game-canvas" width="400" height="400"></canvas><div class="close-btn" onclick="fecharJogos()">SAIR DO TERMINAL</div></div>
     <div id="modal-pong" class="modal-game"><h2 style="color:var(--orange-neon); font-family:var(--font-title); margin-bottom:15px;">MODO ARCADE: NEON PONG</h2><canvas id="canvas-pong" class="game-canvas" width="600" height="400"></canvas><div class="close-btn" onclick="fecharJogos()">SAIR DO TERMINAL</div></div>
 
+    <div class="chatbot-btn" id="btn-chatbot" title="Dúvidas? Fale com a IA">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+            <h3><i class="fas fa-microchip"></i> IA Anacleto</h3>
+            <i class="fas fa-times close-chat" id="close-chat"></i>
+        </div>
+        <div class="chatbot-messages" id="chat-messages">
+            <div class="chat-msg msg-bot">Olá! Sou a assistente virtual da Anacleto Tec. Como posso ajudar você hoje com sistemas web, câmeras ou manutenção?</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chat-input" placeholder="Digite sua dúvida...">
+            <button id="send-chat"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <script>
         /* CURSOR & EFEITOS GERAIS */
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-        document.querySelectorAll('a, button, input, select, textarea, .logo-img, .shield-secret, .close-btn, .card, .portfolio-card, .testimonial-card, .visitor-counter').forEach(el => {
+        document.querySelectorAll('a, button, input, select, textarea, .logo-img, .shield-secret, .close-btn, .card, .portfolio-card, .testimonial-card, .visitor-counter, .chatbot-btn').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
@@ -471,7 +504,7 @@ e oferecemos soluções tecnológicas completas para empresas e residências.</p
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        /* TILT 3D NOS CARDS DE SERVIÇO (DESKTOP APENAS) */
+        /* TILT 3D NOS CARDS DE SERVIÇO */
         if(window.innerWidth > 768) {
             document.querySelectorAll('.tilt-card').forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -480,7 +513,7 @@ e oferecemos soluções tecnológicas completas para empresas e residências.</p
                     const y = e.clientY - rect.top;
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -10; // Intensidade 3D
+                    const rotateX = ((y - centerY) / centerY) * -10; 
                     const rotateY = ((x - centerX) / centerX) * 10;
                     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
                 });
@@ -490,7 +523,7 @@ e oferecemos soluções tecnológicas completas para empresas e residências.</p
             });
         }
 
-        /* ANIMAÇÃO DOS CONTADORES (NUMBER COUNTER) */
+        /* ANIMAÇÃO DOS CONTADORES */
         const counters = document.querySelectorAll('.counter');
         let hasCounted = false;
         const statsObserver = new IntersectionObserver((entries) => {
@@ -594,13 +627,72 @@ e oferecemos soluções tecnológicas completas para empresas e residências.</p
         window.addEventListener('resize', () => { canvasNeural.width = window.innerWidth; canvasNeural.height = window.innerHeight; initNeural(); });
         initNeural(); animateNeural();
 
-        /* JOGOS EASTER EGGS MANTIDOS */
+        /* JOGOS EASTER EGGS */
         let cSnake = 0; let cPong = 0; let gameLoop;
         document.getElementById('trigger-snake').onclick = () => { cSnake++; if(cSnake >= 5){ abrirSnake(); cSnake=0; } };
         document.getElementById('trigger-pong').onclick = () => { cPong++; if(cPong >= 5){ abrirPong(); cPong=0; } };
         function fecharJogos() { document.getElementById('modal-snake').style.display = 'none'; document.getElementById('modal-pong').style.display = 'none'; clearInterval(gameLoop); }
         function abrirSnake() { const modal = document.getElementById('modal-snake'); modal.style.display = 'flex'; const ctx = document.getElementById('canvas-snake').getContext('2d'); let box = 20; let snake = [{x: 10*box, y: 10*box}]; let dir = "RIGHT"; let food = {x: Math.floor(Math.random()*19+1)*box, y: Math.floor(Math.random()*19+1)*box}; document.onkeydown = (e) => { if(e.keyCode==37 && dir!="RIGHT") dir="LEFT"; if(e.keyCode==38 && dir!="DOWN") dir="UP"; if(e.keyCode==39 && dir!="LEFT") dir="RIGHT"; if(e.keyCode==40 && dir!="UP") dir="DOWN"; }; gameLoop = setInterval(() => { ctx.fillStyle = "black"; ctx.fillRect(0,0,400,400); for(let i=0; i<snake.length; i++){ ctx.fillStyle = (i==0) ? "#00a8ff" : "#ff6b00"; ctx.fillRect(snake[i].x, snake[i].y, box, box); } ctx.fillStyle = "white"; ctx.fillRect(food.x, food.y, box, box); let sX = snake[0].x; let sY = snake[0].y; if(dir=="LEFT") sX-=box; if(dir=="UP") sY-=box; if(dir=="RIGHT") sX+=box; if(dir=="DOWN") sY+=box; if(sX==food.x && sY==food.y){ food = {x: Math.floor(Math.random()*19+1)*box, y: Math.floor(Math.random()*19+1)*box}; } else { snake.pop(); } let head = {x: sX, y: sY}; if(sX<0||sX>=400||sY<0||sY>=400) { clearInterval(gameLoop); fecharJogos(); } snake.unshift(head); }, 100); }
         function abrirPong() { const modal = document.getElementById('modal-pong'); modal.style.display = 'flex'; const cvs = document.getElementById('canvas-pong'); const ctx = cvs.getContext('2d'); let p1y = 150; let py = 150; let bx = 300; let by = 200; let bdx = 4; let bdy = 4; cvs.onmousemove = (e) => { p1y = e.clientY - cvs.getBoundingClientRect().top - 40; }; cvs.ontouchmove = (e) => { p1y = e.touches[0].clientY - cvs.getBoundingClientRect().top - 40; e.preventDefault(); }; gameLoop = setInterval(() => { ctx.fillStyle = "black"; ctx.fillRect(0,0,600,400); ctx.fillStyle = "#00a8ff"; ctx.fillRect(10, p1y, 10, 80); ctx.fillStyle = "#ff6b00"; ctx.fillRect(580, py, 10, 80); ctx.fillStyle = "white"; ctx.beginPath(); ctx.arc(bx, by, 8, 0, Math.PI*2); ctx.fill(); bx += bdx; by += bdy; if(by<0 || by>400) bdy *= -1; if(bx<0 || bx>600) { bx=300; by=200; bdx*=-1; } if(bx<20 && by>p1y && by<p1y+80) bdx *= -1; if(bx>570 && by>py && by<py+80) bdx *= -1; py += (by - (py + 40)) * 0.1; }, 1000/60); }
+
+        /* IA BOT LÓGICA */
+        const btnChatbot = document.getElementById('btn-chatbot');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatInput = document.getElementById('chat-input');
+        const sendChat = document.getElementById('send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        btnChatbot.addEventListener('click', () => {
+            chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
+            if(chatbotWindow.style.display === 'flex') chatInput.focus();
+        });
+        
+        closeChat.addEventListener('click', () => { chatbotWindow.style.display = 'none'; });
+
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-msg', sender === 'user' ? 'msg-user' : 'msg-bot');
+            msgDiv.innerHTML = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(input) {
+            const text = input.toLowerCase();
+            
+            if (text.includes('site') || text.includes('sistema') || text.includes('aplicativo') || text.includes('software')) {
+                return "Desenvolvemos sistemas web e desktop estruturados, além de sites responsivos. Qual a necessidade do seu projeto atual?";
+            } else if (text.includes('câmera') || text.includes('camera') || text.includes('cftv') || text.includes('segurança')) {
+                return "Trabalhamos com instalação de câmeras IP e analógicas HD. O acesso remoto é configurado direto no seu celular. Quantas câmeras você precisa?";
+            } else if (text.includes('pc') || text.includes('computador') || text.includes('manutenção') || text.includes('formatar')) {
+                return "Fazemos reparo em computadores, limpeza preventiva e montagem de setups de alta performance. O que está acontecendo com sua máquina?";
+            } else if (text.includes('rede') || text.includes('servidor') || text.includes('internet')) {
+                return "Realizamos cabeamento estruturado e montagem de racks para estabilizar sua conexão e servidores. É para uma empresa ou residência?";
+            } else if (text.includes('orçamento') || text.includes('valor') || text.includes('preço') || text.includes('custa')) {
+                return "Para um orçamento preciso, recomendo clicar no botão do WhatsApp ali embaixo ou preencher o formulário na seção de Contato!";
+            } else {
+                return "Compreendo. Para eu conseguir te dar a melhor solução tecnológica, pode detalhar um pouco mais ou chamar um especialista no botão do WhatsApp?";
+            }
+        }
+
+        function handleSend() {
+            const text = chatInput.value.trim();
+            if (text === '') return;
+            
+            addMessage(text, 'user');
+            chatInput.value = '';
+            
+            setTimeout(() => {
+                const response = getBotResponse(text);
+                addMessage(response, 'bot');
+            }, 700);
+        }
+
+        sendChat.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
     </script>
 </body>
 </html>
